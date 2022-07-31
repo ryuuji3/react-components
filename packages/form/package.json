@@ -1,0 +1,32 @@
+{
+  "name": "@ryuuji3/react-form",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryuuji3/react-components.git"
+  },
+  "keywords": [
+    "react",
+    "form"
+  ],
+  "author": "mori.ryuuji3@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ryuuji3/react-components/issues"
+  },
+  "homepage": "https://github.com/ryuuji3/react-components#readme",
+  "devDependencies": {
+    "@semantic-release/commit-analyzer": "^9.0.2",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^8.0.5",
+    "@semantic-release/npm": "^9.0.1",
+    "@semantic-release/release-notes-generator": "^10.0.3",
+    "semantic-release": "^19.0.3",
+    "semantic-release-monorepo": "^7.0.5"
+  }
+}
