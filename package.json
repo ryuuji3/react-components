@@ -1,0 +1,23 @@
+{
+  "name": "@ryuuji/react-components",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A collection of react components.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryuuji3/react-components.git"
+  },
+  "keywords": [
+    "react",
+    "components"
+  ],
+  "author": "mori.ryuuji3@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ryuuji3/react-components/issues"
+  },
+  "homepage": "https://github.com/ryuuji3/react-components#readme",
+  "workspaces": [
+    "packages/**"
+  ]
+}
