@@ -1,22 +1,22 @@
-import { selector, useRecoilValue } from 'recoil'
-
-import { Items } from '../atoms'
-import Form from '../model/Form'
-
+import { selector, useRecoilValue } from "recoil"
+import { Fields, FormValue } from "./useField"
 
 function useForm() {
-    const form = useRecoilValue(getForm)
+    const fields = useRecoilValue(FormFields)
 
-    return form
+    return {
+        get fields() {
+            return fields
+        }
+    }
 }
 
-export const getForm = selector({
-    key: 'form',
-    get: ({ get }) => {
-        const items = get(Items)
-
-        return new Form(items)
-    },
+export const FormFields = selector({
+    key: "form",
+    get: ({ get }) => get(Fields).map(fieldName => ({
+        get name() { return fieldName },
+        get value() { return get(FormValue(fieldName)) },
+    }))
 })
 
 export default useForm

@@ -1,16 +1,12 @@
 import React from 'react'
-import { RecoilRoot } from 'recoil'
+import { RecoilRoot, RecoilRootProps } from 'recoil'
 
-function withRecoil(Component: React.ComponentType<WithChildren>, recoilProps = {}) {
-    return (props: any) => (
-        <RecoilRoot {...recoilProps}>
+function withRecoil<T>(Component: React.ComponentType<T>) {
+    return (props: any & Partial<RecoilRootProps>) => (
+        <RecoilRoot {...props}>
             <Component {...props} />
         </RecoilRoot>
     )
-}
-
-interface WithChildren {
-    children: React.ReactNode
 }
 
 export default withRecoil
