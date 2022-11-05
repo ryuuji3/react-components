@@ -9,11 +9,9 @@ function useField<T>(field: Field<T>) {
     // Update the value of the field in the form state
     useEffect(
         () => {
-            if (value !== field.value) {
-                setValue(field.value)
-            }
+            setValue(field.value)
         },
-        [field.value, setValue, value]
+        [field.value, setValue]
     )
 
     // Register field so the form can know about it

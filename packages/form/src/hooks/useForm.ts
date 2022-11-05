@@ -4,7 +4,7 @@ import { Fields, FormValue } from "./useField"
 function useForm() {
     const fields = useRecoilValue(FormFields)
 
-    return {
+    return { 
         get fields() {
             return fields
         }
@@ -16,7 +16,7 @@ export const FormFields = selector({
     get: ({ get }) => get(Fields).map(fieldName => ({
         get name() { return fieldName },
         get value() { return get(FormValue(fieldName)) },
-    }))
+    })),
 })
 
 export default useForm
