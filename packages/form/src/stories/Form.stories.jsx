@@ -1,13 +1,14 @@
+import Field from "../components/Field"
 import FormComponent from "../components/Form"
-import TextInput from "../components/TextInput"
 
 export default {
     title: 'Form',
     component: FormComponent,
     args: {
         children: (
-            <TextInput
+            <Field
                 name="name"
+                type="text"
                 value={null}
             />
         ),
