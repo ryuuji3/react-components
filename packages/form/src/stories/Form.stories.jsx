@@ -11,7 +11,14 @@ export default {
                 value={null}
             />
         ),
-    }
+    },
+    argTypes: {
+        children: {
+            table: {
+                disable: true,
+            },
+        }
+    },
 }
 
 function Template(args) {

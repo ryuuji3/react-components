@@ -2,7 +2,7 @@ import useField from "../hooks/useField";
 import { Field } from "../types";
 
 export default function withField<T>(Input: React.ComponentType<T>) {
-    return function ({ name, value: initialValue, onChange, ...otherProps }: any & FieldProps) {
+    function Wrapped({ name, value: initialValue, onChange, ...otherProps }: any & FieldProps) {
         const [ value, setValue ] = useField({
             name,
             value: initialValue,
@@ -22,6 +22,10 @@ export default function withField<T>(Input: React.ComponentType<T>) {
             />
         )
     }
+
+    Wrapped.displayName = Input.displayName || Input.name
+
+    return Wrapped
 }
 
 export interface FieldProps extends Field {
