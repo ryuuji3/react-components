@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
+import withLabel from '../hoc/withLabel'
+
 function TextInput({
     name,
     value,
@@ -37,4 +39,4 @@ export interface TextInputProps {
     onChange?: (value: TextInputValue) => void,
 }
 
-export default TextInput
+export default withLabel(TextInput)

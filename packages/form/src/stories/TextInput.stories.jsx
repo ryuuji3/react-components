@@ -21,4 +21,9 @@ function Template(args) {
     )
 }
 
-export const TextInput = Template.bind({})
+export const InputOnly = Template.bind({})
+
+export const WithLabel = Template.bind({})
+WithLabel.args = {
+    label: 'Enter your name:',
+}
