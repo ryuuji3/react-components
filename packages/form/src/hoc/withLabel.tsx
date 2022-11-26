@@ -1,14 +1,23 @@
 function withLabel<T>(Input: React.ComponentType<T>) {
-    function Wrapped({ label, ...inputProps }: any & LabelProps) {
-        // Allow to wrap without forcing them to use the label prop
+    function Wrapped({ 
+        label, 
+        className, 
+        inputClassName, 
+        textClassName, 
+        ...inputProps 
+    }: any & LabelProps) {
+        // Allow to wrap without forcing them to use the label prop (acts as if it doesn't exist)
         if (!label) {
-            return <Input {...inputProps} />
+            return <Input 
+                {...inputProps}
+                className={className} 
+            />
         }
 
         return (
-            <label>
-                {label}
-                <Input {...inputProps} />
+            <label className={className}>
+                <span className={textClassName}>{label}</span>
+                <Input {...inputProps} className={inputClassName} />
             </label>
         )
     }
@@ -20,6 +29,9 @@ function withLabel<T>(Input: React.ComponentType<T>) {
 
 export type LabelProps = {
     label?: React.ReactNode,
+    className?: string, // style the container
+    inputClassName?: string, // style the input; exposing this to avoid inappropriate familiarity
+    textClassName?: string, // style just the text
 }
 
 export default withLabel

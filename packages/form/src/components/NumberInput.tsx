@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 
 import withLabel from '../hoc/withLabel'
 
-function TextInput({
+function NumberInput({
     name,
     value,
     onChange,
     ...inputProps
-}: TextInputProps) {
+}: NumberInputProps) {
     const [ currentValue, setValue ] = useState(value)
 
     // Synchronize the value prop with the internal state
@@ -17,7 +17,11 @@ function TextInput({
     )
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-        const newValue = e.target.value
+        const newValue = Number(e.target.value)
+
+        if (Number.isNaN(newValue)) {
+            return // ignore change, its not valid
+        }
 
         setValue(newValue)
         onChange?.(newValue);
@@ -27,18 +31,19 @@ function TextInput({
         <input
             {...inputProps}
             name={name}
-            type="text"
-            value={currentValue ?? ''}
+            type="number"
+            inputMode="decimal"
+            value={currentValue?.toString() ?? ''}
             onChange={handleChange}
         />
     )
 }
 
-export type TextInputValue = string | null;
-export interface TextInputProps {
+export type NumberInputValue = number | null;
+export type NumberInputProps = {
     name: string,
-    value?: TextInputValue,
-    onChange?: (value: TextInputValue) => void,
+    value?: NumberInputValue,
+    onChange?: (value: NumberInputValue) => void,
 }
 
-export default withLabel(TextInput)
+export default withLabel(NumberInput)

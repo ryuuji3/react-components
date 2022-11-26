@@ -1,11 +1,11 @@
 import withRecoil from '../hoc/withRecoil'
 import useForm, { FieldValues } from '../hooks/useForm'
 
-function Form({ children, onChange }: FormProps) {
+function Form({ children, onChange, className }: FormProps) {
     useForm({ onChange })
 
     return (
-        <form>
+        <form className={className}>
             {children}
         </form>
     )
@@ -13,7 +13,8 @@ function Form({ children, onChange }: FormProps) {
 
 interface FormProps {
     children: React.ReactNode,
-    onChange?: (values: FieldValues) => void
+    onChange?: (values: FieldValues) => void,
+    className?: string,
 }
 
 export default withRecoil(Form)
