@@ -17,6 +17,11 @@ export default {
             table: {
                 disable: true,
             },
+        },
+        onChange: {
+            action: {
+                type: 'change',
+            }
         }
     },
 }

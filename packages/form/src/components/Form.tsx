@@ -1,6 +1,9 @@
 import withRecoil from '../hoc/withRecoil'
+import useForm, { FieldValues } from '../hooks/useForm'
 
-function Form({ children }: FormProps) {
+function Form({ children, onChange }: FormProps) {
+    useForm({ onChange })
+
     return (
         <form>
             {children}
@@ -10,6 +13,7 @@ function Form({ children }: FormProps) {
 
 interface FormProps {
     children: React.ReactNode,
+    onChange?: (values: FieldValues) => void
 }
 
 export default withRecoil(Form)
