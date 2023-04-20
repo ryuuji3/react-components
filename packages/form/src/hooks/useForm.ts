@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { atom, selector, useRecoilCallback, useRecoilState } from "recoil"
 import { Fields, FormValue } from "./useField"
+import { set as _set } from 'lodash'
 
 function useForm({ onChange }: FormParams = {}) {
     const [ formChange, setFormChange ] = useRecoilState(FormChange)
@@ -45,15 +46,19 @@ export const FormChange = atom<Function | undefined>({
 
 export const FormFields = selector({
     key: "form",
-    get: ({ get }) => get(Fields).map(fieldName => ({
-        get name() { return fieldName },
-        get value() { return get(FormValue(fieldName)) },
-    })),
+    get: ({ get }) => {
+        const fields = get(Fields)
+
+        return fields.reduce((values, fieldName) => {
+            _set(values, fieldName, get(FormValue(fieldName)))
+            return values
+        }, {})
+    },
 })
 
 export type FormParams = {
     onChange?: (values: FieldValues) => void
 }
-export type FieldValues = Array<{ name: string, value: any }>
+export type FieldValues = { [fieldName: string]: any }
 
 export default useForm

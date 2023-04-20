@@ -1,15 +1,15 @@
-function withLabel<T>(Input: React.ComponentType<T>) {
+function withLabel<T>(Element: React.ComponentType<T>) {
     function Wrapped({ 
         label, 
         className, 
         inputClassName, 
         textClassName, 
-        ...inputProps 
+        ...elementProps 
     }: any & LabelProps) {
         // Allow to wrap without forcing them to use the label prop (acts as if it doesn't exist)
         if (!label) {
-            return <Input 
-                {...inputProps}
+            return <Element 
+                {...elementProps}
                 className={className} 
             />
         }
@@ -17,12 +17,12 @@ function withLabel<T>(Input: React.ComponentType<T>) {
         return (
             <label className={className}>
                 <span className={textClassName}>{label}</span>
-                <Input {...inputProps} className={inputClassName} />
+                <Element {...elementProps} className={inputClassName} />
             </label>
         )
     }
 
-    Wrapped.displayName = Input.displayName || Input.name
+    Wrapped.displayName = Element.displayName || Element.name
 
     return Wrapped
 }

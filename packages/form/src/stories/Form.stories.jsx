@@ -1,3 +1,4 @@
+import Computed from "../components/Computed"
 import Field from "../components/Field"
 import FormComponent from "../components/Form"
 
@@ -19,6 +20,20 @@ export default {
                     type="number"
                     label="Enter a number:"
                     className="flex-1 flex flex-column padding-1"
+                />
+
+                <Field
+                    name="number2"
+                    type="number"
+                    label="Enter a second number:"
+                    className="flex-1 flex flex-column padding-1"
+                />
+
+                <Computed
+                    name="sum"
+                    label="Sum:"
+                    className="flex-1 flex flex-column padding-1"
+                    getValue={({ number, number2 }) => number + number2}
                 />
             </>
             
