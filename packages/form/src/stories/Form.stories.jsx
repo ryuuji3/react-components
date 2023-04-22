@@ -13,13 +13,17 @@ export default {
                     type="text"
                     label="What is your name?"
                     className="flex-1 flex flex-column padding-1"
+                    isRequired
                 />
 
                 <Field
                     name="number"
                     type="number"
-                    label="Enter a number:"
+                    label="Enter a number between 1-10:"
                     className="flex-1 flex flex-column padding-1"
+                    min={1}
+                    max={10}
+                    isRequired
                 />
 
                 <Field
@@ -27,6 +31,7 @@ export default {
                     type="number"
                     label="Enter a second number:"
                     className="flex-1 flex flex-column padding-1"
+                    isRequired
                 />
 
                 <Computed
@@ -35,6 +40,14 @@ export default {
                     className="flex-1 flex flex-column padding-1"
                     getValue={({ number, number2 }) => number + number2}
                 />
+
+                <Computed>
+                    {(_values, form) => (
+                        <button type="submit" disabled={!form.isValid}>
+                            Submit
+                        </button>
+                    )}
+                </Computed>
             </>
             
         ),

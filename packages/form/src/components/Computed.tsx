@@ -10,7 +10,7 @@ function Computed({
 }: ComputedProps) {
     const form = useForm();
     const values = useRecoilValue(FormFields);
-    const value = getValue(values)?.toString?.() ?? ''
+    const value = getValue?.(values)?.toString?.() ?? ''
 
     // TODO: Register computed field with form
 
@@ -21,7 +21,7 @@ function Computed({
 
     // Allow custom rendition of the value
     if (typeof children === 'function') {
-        return children(value, form.fields);
+        return children(value, form);
     }
 
     // Simple output of the value
@@ -31,7 +31,7 @@ function Computed({
 }
 
 export type ComputedProps = {
-    name: string,
+    name?: string,
     getValue: (values: FieldValues) => any,
     isRendered?: boolean,
     children?: (value: any, values: FieldValues) => React.ReactElement,

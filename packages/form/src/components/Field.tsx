@@ -8,14 +8,20 @@ enum FieldTypes {
     NUMBER = 'number',
 }
 
-function Field({ type, ...inputProps }: FieldProps & { type: FieldTypes }) {
+function Field({ type, children: Input, ...fieldProps }: Props) {
+    if (typeof Input === 'function') {
+        return <Input {...fieldProps} />
+    }
+
     switch(type) {
         case FieldTypes.NUMBER:
-            return <NumberInput {...inputProps} />
+            return <NumberInput {...fieldProps} />
         case FieldTypes.TEXT:
         default:
-            return <TextInput {...inputProps} />
+            return <TextInput {...fieldProps} />
     }
 }
+
+type Props = FieldProps & { type?: FieldTypes } & { children?: React.ComponentType<FieldProps> }
 
 export default withField(Field)

@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { atom, selector, useRecoilCallback, useRecoilState } from "recoil"
-import { Fields, FormValue } from "./useField"
+import { Fields, FormValue, Validity } from "./useField"
 import { set as _set } from 'lodash'
 
 function useForm({ onChange }: FormParams = {}) {
@@ -24,6 +24,13 @@ function useForm({ onChange }: FormParams = {}) {
         []
     )
 
+    const getValidity = useRecoilCallback(
+        ({ snapshot }) => () => {
+            return snapshot.getLoadable(FormValidity).getValue()
+        },
+        []
+    )
+
     function handleFieldChange() {
         formChange?.(getValues(), form)
     }
@@ -34,6 +41,9 @@ function useForm({ onChange }: FormParams = {}) {
             return getValues()
         },
         onChange: handleFieldChange,
+        get isValid() {
+            return getValidity()
+        }
     }
 
     return form
@@ -54,6 +64,17 @@ export const FormFields = selector({
             return values
         }, {})
     },
+})
+
+export const FormValidity = selector({
+    key: 'form.isValid',
+    get: ({ get }) => {
+        const fields = get(Fields)
+
+        return fields
+            .map(field => get(Validity(field)))
+            .every(state => state.isValid)
+    }
 })
 
 export type FormParams = {
