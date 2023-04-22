@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React from 'react'
 
 import withLabel from '../hoc/withLabel'
 import withErrorMessage from '../hoc/withErrorMessage'
 import { ValidityState } from '../types'
+import useInputValidity from '../hooks/useInputValidity'
 
 function TextInput({
     name,
@@ -12,45 +13,15 @@ function TextInput({
     isRequired,
     ...inputProps
 }: TextInputProps) {
-    const [ currentValue, setValue ] = useState(value)
-
-    const checkValidity = useCallback(
-        (newValue: TextInputValue) => {
-            if (newValue == null) {
-                return {
-                    isValid: !isRequired,
-                    ...(isRequired && {
-                        message: 'Value is required',
-                    }),
-                    invalidValue: newValue,
-                }
-            }
-
-            return { isValid: true }
-        },
-        [ isRequired ]
-    )
-
-    const updateValue = useCallback(
-        (newValue: TextInputValue) => {
-            setValue(newValue)
-
-            const validity = checkValidity(newValue)
-            onValidityChange?.(validity)
-            onChange?.(validity.isValid ? newValue : null)
-        },
-        [ setValue, onValidityChange, onChange, checkValidity ]
-    )
-
-    // Synchronize value prop with internal state
-    useEffect(
-        () => {
-            if (typeof value === 'string' && value !== currentValue) {
-                updateValue(value)
-            }
-        },
-        [ value, currentValue, updateValue ]
-    )
+    const {
+        currentValue,
+        updateValue,
+    } = useInputValidity({
+        value,
+        onChange,
+        onValidityChange,
+        isRequired,
+    })
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         updateValue(e.target.value === '' ? null : e.target.value)
@@ -67,6 +38,7 @@ function TextInput({
     )
 }
 
+export type ParsedInputValue = string;
 export type TextInputValue = string | null;
 export interface TextInputProps {
     name: string,
