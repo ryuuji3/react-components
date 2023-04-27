@@ -54,7 +54,7 @@ export const FormChange = atom<Function | undefined>({
     default: undefined,
 })
 
-export const FormFields = selector({
+export const FormFields = selector<FieldValues>({
     key: "form",
     get: ({ get }) => {
         const fields = get(Fields)
@@ -80,6 +80,6 @@ export const FormValidity = selector({
 export type FormParams = {
     onChange?: (values: FieldValues) => void
 }
-export type FieldValues = { [fieldName: string]: any }
+export type FieldValues = object
 
 export default useForm

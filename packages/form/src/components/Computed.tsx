@@ -1,6 +1,7 @@
 import { useRecoilValue } from "recoil";
 import withLabel from "../hoc/withLabel";
 import useForm, { FieldValues, FormFields } from "../hooks/useForm";
+import { Form } from "../types";
 
 function Computed({
     name,
@@ -21,12 +22,12 @@ function Computed({
 
     // Allow custom rendition of the value
     if (typeof children === 'function') {
-        return children(value, form);
+        return children(values, form);
     }
 
     // Simple output of the value
     return (
-        <output name={name}>{value}</output>
+        <output name={name}>{value ?? '&mdash;'}</output>
     )
 }
 
@@ -34,7 +35,7 @@ export type ComputedProps = {
     name?: string,
     getValue: (values: FieldValues) => any,
     isRendered?: boolean,
-    children?: (value: any, values: FieldValues) => React.ReactElement,
+    children?: (values: FieldValues, form: Form) => React.ReactElement,
 }
 
 export default withLabel(Computed)

@@ -37,9 +37,4 @@ function Template(args: NumberInputProps) {
     )
 }
 
-export const InputOnly: Story = Template.bind({})
-
-export const WithLabel: Story = Template.bind({})
-WithLabel.args = {
-    label: 'Enter a number:',
-}
+export const NumberInput: Story = Template.bind({})

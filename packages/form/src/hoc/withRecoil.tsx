@@ -1,8 +1,8 @@
 import React from 'react'
 import { RecoilRoot, RecoilRootProps } from 'recoil'
 
-function withRecoil<T>(Component: React.ComponentType<T>) {
-    function Wrapped(props: any & Partial<RecoilRootProps>) {
+function withRecoil<T extends object>(Component: React.ComponentType<T>) {
+    function Wrapped(props: Partial<RecoilRootProps> & any) {
         return (
             <RecoilRoot {...props}>
                 <Component {...props} />

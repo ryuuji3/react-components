@@ -1,11 +1,11 @@
-function withLabel<T>(Element: React.ComponentType<T>) {
+function withLabel<T extends object>(Element: React.ComponentType<T>) {
     function Wrapped({ 
         label, 
         className, 
         inputClassName, 
         textClassName, 
         ...elementProps 
-    }: any & LabelProps) {
+    }: LabelProps & any) {
         // Allow to wrap without forcing them to use the label prop (acts as if it doesn't exist)
         if (!label) {
             return <Element 

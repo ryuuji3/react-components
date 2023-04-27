@@ -1,6 +1,5 @@
 import React from 'react'
 
-import withLabel from '../hoc/withLabel'
 import withErrorMessage from '../hoc/withErrorMessage'
 import { ValidityState } from '../types'
 import useInputValidity from '../hooks/useInputValidity'
@@ -48,4 +47,4 @@ export interface TextInputProps {
     isRequired?: boolean,
 }
 
-export default withLabel(withErrorMessage(TextInput))
+export default withErrorMessage(TextInput)

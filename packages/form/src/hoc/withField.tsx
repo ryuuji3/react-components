@@ -2,8 +2,8 @@ import useField from "../hooks/useField";
 import useForm from "../hooks/useForm";
 import { Field, ValidityState } from "../types";
 
-export default function withField<T>(Input: React.ComponentType<T>) {
-    function Wrapped({ name, value: initialValue, onChange, ...otherProps }: any & FieldProps) {
+export default function withField<T extends object>(Element: React.ComponentType<T>) {
+    function Wrapped({ name, value: initialValue, onChange, ...otherProps }: FieldProps & any) {
         const form = useForm()
         const {
             value,
@@ -22,19 +22,19 @@ export default function withField<T>(Input: React.ComponentType<T>) {
         }
 
         return (
-            <Input
+            <Element
                 {...otherProps}
                 name={name}
                 value={value}
                 onChange={handleChange}
                 onValidityChange={setValidity}
-                errorMessage={validity.message}
+                errorMessage={validity.errorMessage}
                 isValid={validity.isValid}
             />
         )
     }
 
-    Wrapped.displayName = Input.displayName || Input.name
+    Wrapped.displayName = Element.displayName || Element.name
 
     return Wrapped
 }

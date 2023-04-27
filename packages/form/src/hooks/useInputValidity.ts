@@ -23,7 +23,7 @@ function useInputValidity<T>({
                 return {
                     isValid: !isRequired,
                     ...(isRequired && {
-                        message: 'Value is required',
+                        errorMessage: 'Value is required',
                     }),
                     invalidValue: newValue,
                 }

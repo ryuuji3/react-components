@@ -1,0 +1,7 @@
+.question.is-visible {
+    display: block;
+}
+
+.question:not(.is-visible) {
+    display: none;
+}

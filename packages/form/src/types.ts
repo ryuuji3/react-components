@@ -12,6 +12,6 @@ export interface Form {
 
 export interface ValidityState extends Readonly<{ [key: string]: SerializableParam; }> {
     isValid: boolean,
-    message?: string,
+    errorMessage?: string,
     invalidValue?: any,
 }

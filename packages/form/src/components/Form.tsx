@@ -11,7 +11,7 @@ function Form({ children, onChange, className }: FormProps) {
     )
 }
 
-interface FormProps {
+export interface FormProps {
     children: React.ReactNode,
     onChange?: (values: FieldValues) => void,
     className?: string,

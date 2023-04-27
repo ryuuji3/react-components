@@ -1,6 +1,5 @@
 import React from 'react'
 
-import withLabel from '../hoc/withLabel'
 import { ValidityState } from '../types'
 import withErrorMessage from '../hoc/withErrorMessage'
 import useInputValidity from '../hooks/useInputValidity'
@@ -28,7 +27,7 @@ function NumberInput({
             if (Number.isNaN(newValue)) {
                 return {
                     isValid: false,
-                    message: 'Value is not a number',
+                    errorMessage: 'Value is not a number',
                     invalidValue: newValue,
                 }
             }
@@ -36,7 +35,7 @@ function NumberInput({
             if (newValue > max) {
                 return {
                     isValid: false,
-                    message: 'Value is too large',
+                    errorMessage: 'Value is too large',
                     invalidValue: newValue,
                 }
             }
@@ -44,7 +43,7 @@ function NumberInput({
             if (newValue < min) {
                 return {
                     isValid: false,
-                    message: 'Value is too small',
+                    errorMessage: 'Value is too small',
                     invalidValue: newValue,
                 }
             }
@@ -92,4 +91,4 @@ export type NumberInputProps = {
     isRequired?: boolean,
 }
 
-export default withLabel(withErrorMessage(NumberInput))
+export default withErrorMessage(NumberInput)
