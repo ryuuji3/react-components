@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import ErrorMessageContainer, { ErrorMessageContainerProps } from "../components/ErrorMessageContainer"
 
 function withErrorMessage<T extends object>(Element: React.ComponentType<T>) {
@@ -9,18 +9,27 @@ function withErrorMessage<T extends object>(Element: React.ComponentType<T>) {
         
         onBlur,
 
+        shouldShowInvalid: shouldShowInvalidProp,
+
         ...elementProps 
     }: ErrorMessageContainerProps & any) {
-        const [ hasBlurred, setHasBlurred ] = useState(false)
+        const [ shouldShowInvalid, setShouldShowInvalid ] = useState(shouldShowInvalidProp)
+
+        useEffect(
+            () => {
+                setShouldShowInvalid(shouldShowInvalidProp)
+            },
+            [ shouldShowInvalidProp ]
+        )
 
         function handleBlur(e: React.FocusEvent<any>) {
             onBlur?.(e)
-            setHasBlurred(true)
+            setShouldShowInvalid(true)
         }
 
         return (
             <ErrorMessageContainer
-                {...(hasBlurred && {
+                {...(shouldShowInvalid && {
                     isValid,
                     errorMessage,
                 })}

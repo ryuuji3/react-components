@@ -55,13 +55,7 @@ const meta: ComponentMeta<typeof FormComponent> = {
                     }}
                 />
 
-                <Computed
-                    children={(_: any, form: any ) => (
-                        <button type="submit" disabled={!form.isValid}>
-                            Submit
-                        </button>
-                    )}
-                />
+                <button type="submit">Submit</button>
             </>
             
         ),
@@ -75,6 +69,11 @@ const meta: ComponentMeta<typeof FormComponent> = {
         onChange: {
             action: {
                 type: 'change',
+            }
+        },
+        onSubmit: {
+            action: {
+                type: 'submit',
             }
         }
     },

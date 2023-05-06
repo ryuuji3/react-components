@@ -8,6 +8,7 @@ import { FieldValues } from "../types"
 
 function useForm({ onChange }: FormParams = {}) {
     const [ formChange, setFormChange ] = useRecoilState(FormChange)
+    const [ shouldShowInvalid, setShouldShowInvalid ] = useRecoilState(ShouldShowInvalid)
 
     // Sync onChange callback with formChange state (you can only have one form onChange at a time)
     useEffect(
@@ -38,6 +39,12 @@ function useForm({ onChange }: FormParams = {}) {
         formChange?.(getValues(), form)
     }
 
+    function submit() {
+        if (!getValidity()) {
+            setShouldShowInvalid(true)
+        }
+    }
+
     // Use a symbol so we can pass this to callbacks
     const form = { 
         get fields() {
@@ -46,7 +53,9 @@ function useForm({ onChange }: FormParams = {}) {
         onChange: handleFieldChange,
         get isValid() {
             return getValidity()
-        }
+        },
+        submit,
+        shouldShowInvalid,
     }
 
     return form
@@ -78,6 +87,11 @@ export const FormValidity = selector({
             .map(field => get(Validity(field)))
             .every(state => state.isValid)
     }
+})
+
+export const ShouldShowInvalid = atom<boolean>({
+    key: "shouldShowInvalid",
+    default: false,
 })
 
 export type FormParams = {

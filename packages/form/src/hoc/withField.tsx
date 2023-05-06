@@ -29,6 +29,7 @@ export default function withField<T extends object>(Element: React.ComponentType
                 onChange={handleChange}
                 errorMessage={validity.errorMessage}
                 isValid={validity.isValid}
+                shouldShowInvalid={form.shouldShowInvalid}
             />
         )
     }
