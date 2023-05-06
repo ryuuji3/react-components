@@ -1,25 +1,20 @@
 import React from 'react'
 
 import withErrorMessage from '../hoc/withErrorMessage'
-import { ValidityState } from '../types'
-import useInputValidity from '../hooks/useInputValidity'
+import useInput from '../hooks/useInput'
 
 function TextInput({
     name,
     value,
     onChange,
-    onValidityChange,
-    isRequired,
     ...inputProps
 }: TextInputProps) {
     const {
         currentValue,
         updateValue,
-    } = useInputValidity({
+    } = useInput({
         value,
         onChange,
-        onValidityChange,
-        isRequired,
     })
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -37,14 +32,11 @@ function TextInput({
     )
 }
 
-export type ParsedInputValue = string;
 export type TextInputValue = string | null;
 export interface TextInputProps {
     name: string,
     value?: TextInputValue,
     onChange?: (value: TextInputValue) => void,
-    onValidityChange?: (validity: ValidityState) => void,
-    isRequired?: boolean,
 }
 
 export default withErrorMessage(TextInput)

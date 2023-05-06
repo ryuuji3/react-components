@@ -1,7 +1,7 @@
 import { useRecoilValue } from "recoil";
 import withLabel from "../hoc/withLabel";
-import useForm, { FieldValues, FormFields } from "../hooks/useForm";
-import { Form } from "../types";
+import useForm, { FormFields } from "../hooks/useForm";
+import { Form, FieldValues } from "../types";
 
 function Computed({
     name,

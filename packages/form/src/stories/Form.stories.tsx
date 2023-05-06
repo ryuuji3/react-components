@@ -12,16 +12,16 @@ const meta: ComponentMeta<typeof FormComponent> = {
             <>
                 <Question
                     name="name"
-                    component="text"
+                    type="text"
                     label="What is your name?"
                     className="flex-1 flex flex-column padding-1"
                     isRequired
                 />
 
                 <Question
-                    name="number"
-                    component="number"
-                    label="Enter a number between 1-10:"
+                    name="integer"
+                    type="integer"
+                    label="Enter an integer between 1-10:"
                     className="flex-1 flex flex-column padding-1"
                     min={1}
                     max={10}
@@ -29,14 +29,14 @@ const meta: ComponentMeta<typeof FormComponent> = {
                 />
 
                 <Computed>
-                    {({ number }: any) => (
+                    {({ integer }: any) => (
                         <Question
-                            name="number2"
-                            component="number"
-                            label="Enter a second number:"
+                            name="float"
+                            type="float"
+                            label="Enter a float:"
                             className="flex-1 flex flex-column padding-1"
                             isRequired
-                            isVisible={number != null}
+                            isVisible={integer != null}
                         />
                     )}
                 </Computed>
@@ -46,12 +46,12 @@ const meta: ComponentMeta<typeof FormComponent> = {
                     name="sum"
                     label="Sum:"
                     className="flex-1 flex flex-column padding-1"
-                    getValue={({ number, number2 }: any) => {
-                        if (number == null || number2 == null) {
+                    getValue={({ integer, float }: any) => {
+                        if (integer == null || float == null) {
                             return null
                         }
 
-                        return number + number2
+                        return integer + float
                     }}
                 />
 

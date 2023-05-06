@@ -1,18 +1,18 @@
 import useField from "../hooks/useField";
 import useForm from "../hooks/useForm";
-import { Field, ValidityState } from "../types";
+import { Field, ValidityState, FieldValidator, Validator } from "../types";
 
 export default function withField<T extends object>(Element: React.ComponentType<T>) {
-    function Wrapped({ name, value: initialValue, onChange, ...otherProps }: FieldProps & any) {
+    function Wrapped({ name, value: initialValue, onChange, validators, ...otherProps }: FieldProps & any) {
         const form = useForm()
         const {
             value,
             setValue,
             validity,
-            setValidity,
         } = useField({
             name,
             value: initialValue,
+            validators,
         })
 
         function handleChange(value: any) {
@@ -27,7 +27,6 @@ export default function withField<T extends object>(Element: React.ComponentType
                 name={name}
                 value={value}
                 onChange={handleChange}
-                onValidityChange={setValidity}
                 errorMessage={validity.errorMessage}
                 isValid={validity.isValid}
             />
@@ -43,4 +42,5 @@ export interface FieldProps extends Field {
     name: string,
     onChange?: (value: any) => void,
     onValidityChange?: (validity: ValidityState) => void,
+    validators?: Array<Validator | FieldValidator>
 }

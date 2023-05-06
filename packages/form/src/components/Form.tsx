@@ -1,5 +1,6 @@
 import withRecoil from '../hoc/withRecoil'
-import useForm, { FieldValues } from '../hooks/useForm'
+import useForm from '../hooks/useForm'
+import { FieldValues } from '../types'
 
 function Form({ children, onChange, className }: FormProps) {
     useForm({ onChange })

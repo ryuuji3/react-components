@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect } from 'react'
 
 import { ValidityState } from '../types'
 
-function useInputValidity<T>({
+function useInput<T>({
     value,
     checkValidity,
     isRequired,
@@ -60,4 +60,4 @@ function useInputValidity<T>({
     }
 }
 
-export default useInputValidity
+export default useInput

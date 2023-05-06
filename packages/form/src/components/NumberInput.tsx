@@ -1,55 +1,22 @@
 import React from 'react'
 
-import { ValidityState } from '../types'
 import withErrorMessage from '../hoc/withErrorMessage'
-import useInputValidity from '../hooks/useInputValidity'
+import useInput from '../hooks/useInput'
 
 function NumberInput({
     name,
     value,
     onChange,
-    onValidityChange,
-    // validation
-    max = Infinity,
-    min = -Infinity,
-    isRequired,
+    onKeyDown,
+    decimalScale,
     ...inputProps
 }: NumberInputProps) {
     const {
         currentValue,
         updateValue,
-    } = useInputValidity({
+    } = useInput({
         value,
         onChange,
-        onValidityChange,
-        isRequired,
-        checkValidity(newValue: ParsedInputValue) {
-            if (Number.isNaN(newValue)) {
-                return {
-                    isValid: false,
-                    errorMessage: 'Value is not a number',
-                    invalidValue: newValue,
-                }
-            }
-
-            if (newValue > max) {
-                return {
-                    isValid: false,
-                    errorMessage: 'Value is too large',
-                    invalidValue: newValue,
-                }
-            }
-
-            if (newValue < min) {
-                return {
-                    isValid: false,
-                    errorMessage: 'Value is too small',
-                    invalidValue: newValue,
-                }
-            }
-
-            return { isValid: true }
-        },
     })
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -57,12 +24,20 @@ function NumberInput({
             return updateValue(null)
         }
 
-        const newValue = Number(e.target.value)
+        const newValue = parseNumber(e.target.value)
 
         // only update value if it's a valid number
-        if (!Number.isNaN(newValue)) {
+        if (typeof newValue === 'number') {
             updateValue(newValue)
         }
+    }
+
+    function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+        if (decimalScale === 0 && e.key === '.') {
+            e.preventDefault()
+        }
+
+        onKeyDown?.(e)
     }
 
     return (
@@ -70,25 +45,41 @@ function NumberInput({
             {...inputProps}
             name={name}
             type="number"
-            inputMode="decimal"
-            value={currentValue?.toString() ?? ''}
+            value={getInputValue(currentValue, decimalScale)}
             onChange={handleChange}
+            onKeyDown={handleKeyDown}
         />
     )
 }
 
-export type ParsedInputValue = number;
+function parseNumber(value: string, decimalScale?: number) {
+    const parsed = Number(value)
+
+    // Not parseable; bail since we'll ignore their input
+    if (Number.isNaN(parsed)) {
+        return;
+    }
+
+    return parsed
+}
+
+function getInputValue(value?: number | null, decimalScale?: number): string {
+    if (!value) {
+        return ''
+    }
+
+    return typeof decimalScale === 'number'
+        ? value.toFixed(decimalScale)
+        : value.toString()
+}
+
 export type NumberInputValue = number | null;
 export type NumberInputProps = {
     name: string,
     value?: NumberInputValue,
     onChange?: (value: NumberInputValue) => void,
-    onValidityChange?: (validity: ValidityState) => void,
-
-    // validation
-    max?: number,
-    min?: number,
-    isRequired?: boolean,
+    onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>,
+    decimalScale?: number,
 }
 
 export default withErrorMessage(NumberInput)
